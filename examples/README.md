@@ -7,7 +7,6 @@ This directory contains example usage of the OrchestarTool.
 The `programmatic_example.py` demonstrates how to use the orchestrator programmatically:
 
 ```bash
-cd /home/runner/work/orchestartool/orchestartool
 python examples/programmatic_example.py
 ```
 

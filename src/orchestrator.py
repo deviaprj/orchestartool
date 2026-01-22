@@ -240,25 +240,31 @@ class SuperCodexOrchestrator:
                 "message": "Architecture non définie. Concevez l'architecture d'abord."
             }
         
-        os.makedirs(output_dir, exist_ok=True)
-        generated_files = []
-        
-        agents = self.session_data['architecture'].get('specialized_agents', [])
-        
-        for agent in agents:
-            filename = f"{agent['agent_id']}_config.json"
-            filepath = os.path.join(output_dir, filename)
+        try:
+            os.makedirs(output_dir, exist_ok=True)
+            generated_files = []
             
-            with open(filepath, 'w', encoding='utf-8') as f:
-                json.dump(agent, f, indent=2, ensure_ascii=False)
+            agents = self.session_data['architecture'].get('specialized_agents', [])
             
-            generated_files.append(filepath)
-        
-        return {
-            "status": "success",
-            "generated_files": generated_files,
-            "message": f"Généré {len(generated_files)} fichiers de configuration"
-        }
+            for agent in agents:
+                filename = f"{agent['agent_id']}_config.json"
+                filepath = os.path.join(output_dir, filename)
+                
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    json.dump(agent, f, indent=2, ensure_ascii=False)
+                
+                generated_files.append(filepath)
+            
+            return {
+                "status": "success",
+                "generated_files": generated_files,
+                "message": f"Généré {len(generated_files)} fichiers de configuration"
+            }
+        except OSError as e:
+            return {
+                "status": "error",
+                "message": f"Erreur lors de l'export: {str(e)}"
+            }
     
     def export_complete_spec(self, filepath: str) -> Dict[str, Any]:
         """
@@ -275,11 +281,17 @@ class SuperCodexOrchestrator:
         if spec_result['status'] != 'success':
             return spec_result
         
-        with open(filepath, 'w', encoding='utf-8') as f:
-            json.dump(spec_result['specification'], f, indent=2, ensure_ascii=False)
-        
-        return {
-            "status": "success",
-            "filepath": filepath,
-            "message": "Spécification exportée avec succès"
-        }
+        try:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(spec_result['specification'], f, indent=2, ensure_ascii=False)
+            
+            return {
+                "status": "success",
+                "filepath": filepath,
+                "message": "Spécification exportée avec succès"
+            }
+        except OSError as e:
+            return {
+                "status": "error",
+                "message": f"Erreur lors de l'export: {str(e)}"
+            }

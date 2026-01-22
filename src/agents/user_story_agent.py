@@ -84,8 +84,9 @@ class UserStoryAgent(BaseAgent):
         
         # General features
         if any('Paiement' in f for f in features):
+            story_id = len(stories) + 1
             stories.append({
-                "id": f"US-{len(stories)+1:03d}",
+                "id": f"US-{story_id:03d}",
                 "title": "Intégration paiement en ligne",
                 "description": "En tant qu'utilisateur, je veux pouvoir effectuer des paiements sécurisés",
                 "acceptance_criteria": [
@@ -97,16 +98,17 @@ class UserStoryAgent(BaseAgent):
                 "priority": "Haute",
                 "story_points": 13,
                 "tasks": [
-                    {"id": f"T-{len(stories)+1:03d}-1", "title": "Intégrer SDK Stripe", "estimated_hours": 8},
-                    {"id": f"T-{len(stories)+1:03d}-2", "title": "Créer API de paiement", "estimated_hours": 10},
-                    {"id": f"T-{len(stories)+1:03d}-3", "title": "Interface de paiement frontend", "estimated_hours": 12},
-                    {"id": f"T-{len(stories)+1:03d}-4", "title": "Webhooks et confirmations", "estimated_hours": 6}
+                    {"id": f"T-{story_id:03d}-1", "title": "Intégrer SDK Stripe", "estimated_hours": 8},
+                    {"id": f"T-{story_id:03d}-2", "title": "Créer API de paiement", "estimated_hours": 10},
+                    {"id": f"T-{story_id:03d}-3", "title": "Interface de paiement frontend", "estimated_hours": 12},
+                    {"id": f"T-{story_id:03d}-4", "title": "Webhooks et confirmations", "estimated_hours": 6}
                 ]
             })
         
         if any('Notifications' in f for f in features):
+            story_id = len(stories) + 1
             stories.append({
-                "id": f"US-{len(stories)+1:03d}",
+                "id": f"US-{story_id:03d}",
                 "title": "Système de notifications push",
                 "description": "En tant qu'utilisateur, je veux recevoir des notifications pour rester informé",
                 "acceptance_criteria": [
@@ -118,15 +120,16 @@ class UserStoryAgent(BaseAgent):
                 "priority": "Moyenne",
                 "story_points": 8,
                 "tasks": [
-                    {"id": f"T-{len(stories)+1:03d}-1", "title": "Configurer Firebase Cloud Messaging", "estimated_hours": 6},
-                    {"id": f"T-{len(stories)+1:03d}-2", "title": "API d'envoi de notifications", "estimated_hours": 8},
-                    {"id": f"T-{len(stories)+1:03d}-3", "title": "Interface notifications frontend", "estimated_hours": 10}
+                    {"id": f"T-{story_id:03d}-1", "title": "Configurer Firebase Cloud Messaging", "estimated_hours": 6},
+                    {"id": f"T-{story_id:03d}-2", "title": "API d'envoi de notifications", "estimated_hours": 8},
+                    {"id": f"T-{story_id:03d}-3", "title": "Interface notifications frontend", "estimated_hours": 10}
                 ]
             })
         
         if any('Analytics' in f or 'Reporting' in f for f in features):
+            story_id = len(stories) + 1
             stories.append({
-                "id": f"US-{len(stories)+1:03d}",
+                "id": f"US-{story_id:03d}",
                 "title": "Tableau de bord analytics",
                 "description": "En tant qu'administrateur, je veux visualiser les statistiques d'utilisation",
                 "acceptance_criteria": [
@@ -138,9 +141,9 @@ class UserStoryAgent(BaseAgent):
                 "priority": "Basse",
                 "story_points": 13,
                 "tasks": [
-                    {"id": f"T-{len(stories)+1:03d}-1", "title": "Implémenter tracking d'événements", "estimated_hours": 8},
-                    {"id": f"T-{len(stories)+1:03d}-2", "title": "Créer agrégations et métriques", "estimated_hours": 10},
-                    {"id": f"T-{len(stories)+1:03d}-3", "title": "Interface dashboard avec graphiques", "estimated_hours": 16}
+                    {"id": f"T-{story_id:03d}-1", "title": "Implémenter tracking d'événements", "estimated_hours": 8},
+                    {"id": f"T-{story_id:03d}-2", "title": "Créer agrégations et métriques", "estimated_hours": 10},
+                    {"id": f"T-{story_id:03d}-3", "title": "Interface dashboard avec graphiques", "estimated_hours": 16}
                 ]
             })
         
