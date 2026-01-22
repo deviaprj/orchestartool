@@ -32,6 +32,7 @@ wheels/
 
 # Generated output files
 output/
+examples/output/
 
 # OS
 .DS_Store
