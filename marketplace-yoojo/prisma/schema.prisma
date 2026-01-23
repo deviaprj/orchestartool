@@ -1,0 +1,274 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum UserRole {
+  CLIENT
+  PROVIDER
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+  FAILED
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  password      String? // Null si OAuth
+  role          UserRole @default(CLIENT)
+  emailVerified Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  profile            Profile?
+  services           Service[]
+  bookingsAsClient   Booking[]     @relation("ClientBookings")
+  bookingsAsProvider Booking[]     @relation("ProviderBookings")
+  sentMessages       Message[]     @relation("SentMessages")
+  receivedMessages   Message[]     @relation("ReceivedMessages")
+  reviews            Review[]
+  verification       Verification?
+
+  @@map("users")
+}
+
+model Profile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  firstName String?
+  lastName  String?
+  phone     String?
+  bio       String? @db.Text
+  avatar    String? // URL de l'image
+
+  // Adresse et géolocalisation
+  address    String?
+  city       String?
+  postalCode String?
+  country    String? @default("France")
+  latitude   Float?
+  longitude  Float?
+
+  // Stats prestataire
+  rating       Float? @default(0)
+  totalReviews Int    @default(0)
+  responseTime Int? // En minutes
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([latitude, longitude])
+  @@map("profiles")
+}
+
+// ============================================
+// SERVICES & CATEGORIES
+// ============================================
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  icon        String? // Nom de l'icone Lucide
+  description String?
+  parentId    String?
+  parent      Category?  @relation("SubCategories", fields: [parentId], references: [id])
+  children    Category[] @relation("SubCategories")
+
+  services Service[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
+model Service {
+  id         String @id @default(cuid())
+  providerId String
+  provider   User   @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  title       String
+  description String   @db.Text
+  images      String[] // Array d'URLs
+
+  // Prix
+  priceType  String  @default("RANGE") // FIXED ou RANGE
+  priceMin   Float?
+  priceMax   Float?
+  priceFixed Float?
+  priceUnit  String? @default("heure") // heure, service, m2, etc.
+
+  // Disponibilité
+  available     Boolean @default(true)
+  serviceRadius Float?  @default(10) // Rayon en km
+
+  // Stats
+  viewCount Int @default(0)
+
+  bookings Booking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([providerId])
+  @@index([available])
+  @@map("services")
+}
+
+// ============================================
+// BOOKINGS & PAYMENTS
+// ============================================
+
+model Booking {
+  id String @id @default(cuid())
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  clientId String
+  client   User   @relation("ClientBookings", fields: [clientId], references: [id])
+
+  providerId String
+  provider   User   @relation("ProviderBookings", fields: [providerId], references: [id])
+
+  // Détails réservation
+  scheduledDate DateTime
+  message       String?  @db.Text
+
+  // Statuts
+  status        BookingStatus @default(PENDING)
+  paymentStatus PaymentStatus @default(PENDING)
+
+  // Prix
+  price       Float
+  platformFee Float
+  totalPrice  Float
+
+  // Paiement Stripe
+  stripePaymentIntentId String?
+  stripeTransferId      String?
+
+  review Review?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([clientId])
+  @@index([providerId])
+  @@index([status])
+  @@index([scheduledDate])
+  @@map("bookings")
+}
+
+// ============================================
+// REVIEWS
+// ============================================
+
+model Review {
+  id String @id @default(cuid())
+
+  bookingId String  @unique
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  clientId String
+  client   User   @relation(fields: [clientId], references: [id])
+
+  rating  Int // 1-5
+  comment String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([clientId])
+  @@map("reviews")
+}
+
+// ============================================
+// MESSAGING
+// ============================================
+
+model Message {
+  id String @id @default(cuid())
+
+  senderId String
+  sender   User   @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+
+  receiverId String
+  receiver   User   @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  content String  @db.Text
+  read    Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([senderId, receiverId])
+  @@index([createdAt])
+  @@map("messages")
+}
+
+// ============================================
+// VERIFICATION
+// ============================================
+
+model Verification {
+  id String @id @default(cuid())
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Documents
+  idFrontUrl String?
+  idBackUrl  String?
+  selfieUrl  String?
+
+  status VerificationStatus @default(PENDING)
+
+  verifiedAt     DateTime?
+  rejectedReason String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("verifications")
+}
