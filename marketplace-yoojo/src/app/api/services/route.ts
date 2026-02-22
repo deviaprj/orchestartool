@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/lib/auth-helpers'
 import { prisma } from '@/lib/db'
 import { z } from 'zod'
+import { createLogger } from '@/lib/logger'
+import { handleApiError } from '@/lib/errors'
+
+const log = createLogger('api/services')
 
 // GET /api/services - List/search services
 export async function GET(req: Request) {
@@ -84,11 +88,7 @@ export async function GET(req: Request) {
       },
     })
   } catch (error) {
-    console.error('Error fetching services:', error)
-    return NextResponse.json(
-      { error: 'Erreur lors de la récupération des services' },
-      { status: 500 }
-    )
+    return handleApiError(error)
   }
 }
 
@@ -140,19 +140,9 @@ export async function POST(req: Request) {
       },
     })
 
+    log.info('Service created', { serviceId: service.id, providerId: session.user.id })
     return NextResponse.json(service, { status: 201 })
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: 'Données invalides', details: error.issues },
-        { status: 400 }
-      )
-    }
-
-    console.error('Error creating service:', error)
-    return NextResponse.json(
-      { error: 'Erreur lors de la création du service' },
-      { status: 500 }
-    )
+    return handleApiError(error)
   }
 }

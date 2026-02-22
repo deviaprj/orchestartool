@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import bcrypt from 'bcryptjs'
 import { z } from 'zod'
+import { createLogger } from '@/lib/logger'
+import { handleApiError } from '@/lib/errors'
+
+const log = createLogger('api/auth/register')
 
 const registerSchema = z.object({
   email: z.string().email('Email invalide'),
@@ -65,6 +69,7 @@ export async function POST(req: Request) {
     // Remove password from response
     const { password: _, ...userWithoutPassword } = user
 
+    log.info('User registered', { userId: userWithoutPassword.id, role: validatedData.role })
     return NextResponse.json(
       {
         message: 'Compte créé avec succès',
@@ -73,17 +78,6 @@ export async function POST(req: Request) {
       { status: 201 }
     )
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: 'Données invalides', details: error.issues },
-        { status: 400 }
-      )
-    }
-
-    console.error('Registration error:', error)
-    return NextResponse.json(
-      { error: 'Une erreur est survenue lors de la création du compte' },
-      { status: 500 }
-    )
+    return handleApiError(error)
   }
 }

@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/lib/auth-helpers'
 import { prisma } from '@/lib/db'
 import { z } from 'zod'
+import { createLogger } from '@/lib/logger'
+import { handleApiError } from '@/lib/errors'
+
+const log = createLogger('api/reviews')
 
 const createReviewSchema = z.object({
   bookingId: z.string(),
@@ -104,19 +108,9 @@ export async function POST(req: Request) {
       data: { rating: avgRating },
     })
 
+    log.info('Review created', { reviewId: review.id, bookingId: validatedData.bookingId })
     return NextResponse.json(review, { status: 201 })
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: 'Données invalides', details: error.issues },
-        { status: 400 }
-      )
-    }
-
-    console.error('Error creating review:', error)
-    return NextResponse.json(
-      { error: 'Erreur lors de la création de l\'avis' },
-      { status: 500 }
-    )
+    return handleApiError(error)
   }
 }
