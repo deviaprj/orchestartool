@@ -8,7 +8,7 @@ import { Providers } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Yoojo Clone - Marketplace de services à domicile",
+  title: "Neigloo - Marketplace de services à domicile",
   description: "Trouvez le prestataire idéal pour tous vos besoins : bricolage, jardinage, ménage, cours particuliers et plus encore.",
 };
 

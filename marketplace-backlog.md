@@ -1,4 +1,4 @@
-# PHASE 3: BACKLOG AGILE & DÉLÉGATION - MARKETPLACE YOOJO CLONE
+# PHASE 3: BACKLOG AGILE & DÉLÉGATION - NEIGLOO
 # Date: 22 janvier 2026
 # Timeline: 48 heures maximum
 
@@ -20,7 +20,7 @@
 **Tâches techniques:**
 1. Créer projet Next.js avec App Router
    - Agent responsable: Super Codex
-   - Commande: `npx create-next-app@latest marketplace-yoojo --typescript --tailwind --app --src-dir`
+   - Commande: `npx create-next-app@latest neigloo --typescript --tailwind --app --src-dir`
    - Tests: Vérifier que `npm run dev` démarre sans erreur
 
 2. Installer dépendances essentielles
@@ -30,7 +30,7 @@
 
 3. Configurer PostgreSQL local
    - Agent responsable: Database Architect Agent
-   - Créer database: `createdb marketplace_yoojo_dev`
+   - Créer database: `createdb neigloo_dev`
    - Configurer DATABASE_URL dans .env
 
 4. Initialiser Prisma

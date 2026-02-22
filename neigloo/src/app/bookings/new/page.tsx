@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -22,17 +22,20 @@ export default function NewBookingPage() {
     message: '',
   })
 
+  useEffect(() => {
+    if (status === 'loading') return
+    if (!session) {
+      router.push(`/login?callbackUrl=/bookings/new?serviceId=${serviceId}`)
+    } else if (!serviceId) {
+      router.push('/services')
+    }
+  }, [status, session, serviceId, router])
+
   if (status === 'loading') {
     return <div className="container mx-auto px-4 py-8">Chargement...</div>
   }
 
-  if (!session) {
-    router.push(`/login?callbackUrl=/bookings/new?serviceId=${serviceId}`)
-    return null
-  }
-
-  if (!serviceId) {
-    router.push('/services')
+  if (!session || !serviceId) {
     return null
   }
 

@@ -1,4 +1,4 @@
-# 🏠 Marketplace Yoojo Clone
+# 🏠 Neigloo - Marketplace de Services à Domicile
 
 Plateforme marketplace de services à domicile - Clone inspiré de Yoojo.fr
 
@@ -41,7 +41,7 @@ Application web complète permettant de mettre en relation clients et prestatair
 1. **Cloner le repository**
 ```bash
 git clone [url-repo]
-cd marketplace-yoojo
+cd neigloo
 ```
 
 2. **Installer les dépendances**
@@ -61,7 +61,7 @@ cp .env.example .env
 
 4. **Créer la base de données**
 ```bash
-createdb marketplace_yoojo_dev
+createdb neigloo_dev
 ```
 
 5. **Générer le client Prisma et créer les tables**
@@ -94,7 +94,7 @@ Ouvrir [http://localhost:3000](http://localhost:3000)
 ## 📁 Structure du projet
 
 ```
-marketplace-yoojo/
+neigloo/
 ├── prisma/
 │   ├── schema.prisma      # Schéma de base de données
 │   └── seed.ts            # Données de test
