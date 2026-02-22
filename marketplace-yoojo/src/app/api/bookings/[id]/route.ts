@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/lib/auth-helpers'
 import { prisma } from '@/lib/db'
 import { BookingStatus } from '@prisma/client'
+import { createLogger } from '@/lib/logger'
+import { handleApiError } from '@/lib/errors'
+
+const log = createLogger('api/bookings')
 
 export async function PATCH(
   req: Request,
@@ -78,12 +82,9 @@ export async function PATCH(
       },
     })
 
+    log.info('Booking status updated', { bookingId: id, status, userId: session.user.id })
     return NextResponse.json(updatedBooking)
   } catch (error) {
-    console.error('Error updating booking:', error)
-    return NextResponse.json(
-      { error: 'Erreur lors de la mise à jour de la réservation' },
-      { status: 500 }
-    )
+    return handleApiError(error)
   }
 }

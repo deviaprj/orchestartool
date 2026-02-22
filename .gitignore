@@ -1,0 +1,14 @@
+# Editor swap / temp files
+*.swp
+*.swo
+*~
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Screenshot / image clutter
+*.png
+*.jpg
+*.jpeg
+*.gif

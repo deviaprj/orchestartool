@@ -1,6 +1,6 @@
-# 🏠 Marketplace Yoojo Clone
+# 🏠 ServiceHub — Home Services Marketplace
 
-Plateforme marketplace de services à domicile - Clone inspiré de Yoojo.fr
+Plateforme marketplace de services à domicile.
 
 ## 📋 Description
 
