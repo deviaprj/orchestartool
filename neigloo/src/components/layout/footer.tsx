@@ -98,7 +98,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="mt-8 pt-8 border-t flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-600 text-sm">
-            © 2026 Yoojo Clone. Tous droits réservés.
+            © 2026 Neigloo. Tous droits réservés.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="text-gray-600 hover:text-gray-900">

@@ -17,10 +17,10 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">Y</span>
+              <span className="text-white font-bold text-xl">N</span>
             </div>
             <span className="font-bold text-xl text-gray-900 hidden sm:block">
-              Yoojo
+              Neigloo
             </span>
           </Link>
 

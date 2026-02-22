@@ -1,4 +1,4 @@
-# PHASE 2: ARCHITECTURE & CONFIGURATION - MARKETPLACE YOOJO CLONE
+# PHASE 2: ARCHITECTURE & CONFIGURATION - NEIGLOO
 # Date: 22 janvier 2026
 # Objectif: Plateforme marketplace de services à domicile (concurrent Yoojo)
 
@@ -282,7 +282,7 @@ super_codex:
     
     2. STRUCTURE PROJET:
        ```
-       marketplace-yoojo/
+       neigloo/
        ├── app/                    # Next.js App Router
        │   ├── (auth)/            # Groupe routes auth
        │   ├── (dashboard)/       # Groupe routes protégées
@@ -627,7 +627,7 @@ super_codex:
     COMMANDES ESSENTIELLES:
     ```bash
     # Setup
-    npx create-next-app@latest marketplace-yoojo --typescript --tailwind --app
+    npx create-next-app@latest neigloo --typescript --tailwind --app
     npm install prisma @prisma/client
     npm install next-auth
     npm install stripe
