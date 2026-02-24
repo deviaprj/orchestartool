@@ -107,14 +107,16 @@ neigloo/
 
 ## 🎯 Fonctionnalités
 
-- [x] Authentification
-- [x] Profils utilisateurs
-- [x] Services & catégories
-- [x] Recherche géolocalisée
-- [x] Réservations
-- [x] Paiements Stripe
-- [x] Reviews
-- [x] Messagerie
+- [x] Authentification (inscription + connexion)
+- [x] Profils utilisateurs (dashboard)
+- [x] Services & catégories (liste, détail, création API)
+- [x] Recherche de services (par mot-clé et ville)
+- [x] Réservations (création + gestion statuts)
+- [x] Reviews (API)
+- [ ] Paiements Stripe (packages installés, intégration en attente)
+- [ ] Messagerie temps réel (packages installés, intégration en attente)
+- [ ] Géolocalisation / Maps
+- [ ] Profil public prestataire (`/profile/[id]`)
 
 ## 🛠️ Scripts disponibles
 

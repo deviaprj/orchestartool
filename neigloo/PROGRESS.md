@@ -1,8 +1,8 @@
 # 📊 RAPPORT DE PROGRESSION - NEIGLOO
 
-**Date**: 22 janvier 2026
-**Timeline**: 48 heures
-**Statut actuel**: ⏳ En cours (Heure 2/48)
+**Dernière mise à jour**: 24 février 2026
+**Timeline initiale**: 48 heures
+**Statut actuel**: 🚧 MVP en cours — fonctionnalités core complètes, intégrations avancées en attente
 
 ---
 
@@ -18,23 +18,23 @@
 ## ✅ EPIC 1: INFRASTRUCTURE & SETUP (100%)
 
 ### ✅ User Story 1.1: Configuration Projet
-- [x] Next.js 14 initialisé avec TypeScript ✅
-- [x] Tailwind CSS configuré ✅
-- [x] Prisma ORM installé et configuré ✅
+- [x] Next.js 16.1.4 initialisé avec TypeScript ✅
+- [x] Tailwind CSS v4 configuré ✅
+- [x] Prisma ORM v7 installé et configuré ✅
 - [x] Variables d'environnement template créé (.env.example) ✅
 - [x] Git initialisé avec .gitignore ✅
 - [x] Dependencies installées (30+ packages) ✅
 
 **Packages installés:**
-- Core: next, react, react-dom, typescript
-- Database: prisma, @prisma/client
-- Auth: next-auth@beta, bcryptjs
+- Core: next 16.1.4, react 19, react-dom 19, typescript
+- Database: prisma 7, @prisma/client 7
+- Auth: next-auth@beta 5.0.0-beta.30, bcryptjs
 - Forms: react-hook-form, zod, @hookform/resolvers
 - State: zustand
 - UI: lucide-react, class-variance-authority, clsx, tailwind-merge
-- Radix UI: @radix-ui/react-slot, react-label, react-dialog, react-dropdown-menu, react-avatar, react-select
-- Payment: stripe, @stripe/stripe-js
-- Real-time: socket.io, socket.io-client
+- Radix UI: @radix-ui/react-slot, react-label, react-dialog, react-dropdown-menu, react-avatar, react-select, react-tabs
+- Payment: stripe, @stripe/stripe-js (installés, non intégrés)
+- Real-time: socket.io, socket.io-client (installés, non intégrés)
 - Utils: date-fns
 
 ### ✅ User Story 1.2: Schéma Base de Données
@@ -54,209 +54,247 @@
 
 ---
 
-## ✅ COMPOSANTS UI DE BASE CRÉÉS (80%)
+## ✅ EPIC 2: AUTHENTIFICATION & AUTORISATION (100%)
 
-### Composants implémentés
+### ✅ User Story 2.1: Configuration NextAuth
+- [x] `src/lib/auth.ts` - NextAuth v5 avec credentials provider ✅
+- [x] `src/lib/auth-helpers.ts` - Helper `auth()` pour API routes ✅
+- [x] `src/app/api/auth/[...nextauth]/route.ts` - Handler NextAuth ✅
+- [x] `src/app/api/auth/register/route.ts` - POST inscription ✅
+- [x] `src/middleware.ts` - Protection des routes (dashboard, bookings) ✅
+- [x] `src/types/next-auth.d.ts` - Typage session étendu ✅
+
+### ✅ User Story 2.2: Pages d'authentification
+- [x] `/login` - Formulaire connexion avec gestion erreurs ✅
+- [x] `/register` - Formulaire inscription CLIENT/PROVIDER avec champs conditionnels ✅
+
+---
+
+## ✅ EPIC 3: COMPOSANTS UI (90%)
+
+### ✅ Composants implémentés
 - [x] `Button` - Variants (default, destructive, outline, secondary, ghost, link) ✅
 - [x] `Input` - Styled avec validation states ✅
 - [x] `Textarea` - Pour messages et descriptions ✅
 - [x] `Label` - Radix UI based ✅
 - [x] `Card` - Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter ✅
+- [x] `Avatar` - AvatarImage + AvatarFallback (Radix UI) ✅
+- [x] `Badge` - Pour statuts et catégories ✅
+- [x] `Dialog` - Modal Radix UI ✅
+- [x] `Select` - Radix UI based ✅
+- [x] `Tabs` - TabsList, TabsTrigger, TabsContent (Radix UI) ✅
 
-### Composants à créer (priorité pour MVP)
-- [ ] `Avatar` - Pour profils utilisateurs
-- [ ] `Badge` - Pour statuts et catégories
-- [ ] `Dialog/Modal` - Pour confirmations
-- [ ] `DropdownMenu` - Pour navigation
-- [ ] `Select` - Pour filtres
-- [ ] `Toast` - Pour notifications
-- [ ] `Skeleton` - Pour loading states
+### ⚠️ Composants manquants
+- [ ] `Toast` - Notifications utilisateur
+- [ ] `Skeleton` - States de chargement
+- [ ] `DropdownMenu` - Navigation utilisateur
 
 ---
 
-## ✅ UTILITAIRES CRÉÉS
+## ✅ EPIC 4: UTILITAIRES & LIBS (100%)
 
-### Fichiers libs
-- [x] `src/lib/utils.ts` - Fonctions utilitaires ✅
-  - cn() - Merge classes Tailwind
-  - calculateDistance() - Formule Haversine géolocalisation
-  - formatPrice() - Format euro (Intl)
-  - formatDate() - Format français
-  - formatRelativeTime() - "il y a X min"
-  - truncate() - Tronquer texte
-  - calculatePlatformFee() - Calcul commission 15%
-  - getInitials() - Initiales pour avatars
-
+- [x] `src/lib/utils.ts` - cn(), calculateDistance() Haversine, formatPrice() €, formatDate() FR, formatRelativeTime(), truncate(), calculatePlatformFee() 15%, getInitials() ✅
 - [x] `src/lib/db.ts` - Client Prisma singleton ✅
 
 ---
 
-## 📋 PROCHAINES ÉTAPES (Par ordre de priorité)
+## ✅ EPIC 5: LAYOUT & NAVIGATION (100%)
 
-### PHASE 1: Homepage & Navigation (Heure 3-5)
-1. **Layout principal**
-   - Header avec navigation
-   - Footer
-   - Container responsive
-
-2. **Homepage**
-   - Hero section avec search bar
-   - Catégories en grid
-   - Services populaires
-   - CTA "Devenir prestataire"
-
-3. **Navigation**
-   - Desktop menu
-   - Mobile burger menu
-   - User dropdown (si connecté)
-
-### PHASE 2: Authentication (Heure 5-8)
-1. **NextAuth configuration**
-   - Credentials provider
-   - JWT strategy
-   - Session handling
-
-2. **Pages auth**
-   - `/login` - Formulaire connexion
-   - `/register` - Formulaire inscription avec choix role
-   - `/register/provider` - Formulaire prestataire étendu
-
-3. **API Routes auth**
-   - `POST /api/auth/register`
-   - Session management
-
-### PHASE 3: Pages principales (Heure 8-14)
-1. **/services/search** - Recherche et filtres
-2. **/services/[id]** - Détail service
-3. **/profile/[id]** - Profil public
-4. **/dashboard/client** - Dashboard client
-5. **/dashboard/provider** - Dashboard prestataire
-
-### PHASE 4: API Backend (Heure 14-20)
-1. Services CRUD
-2. Bookings management
-3. Reviews system
-4. Messages endpoints
-5. Search with geolocation
-
-### PHASE 5: Paiements Stripe (Heure 20-24)
-1. Setup Stripe Connect
-2. Checkout flow
-3. Webhooks
-4. Escrow system
-
-### PHASE 6: Features avancées (Heure 24-36)
-1. Messagerie temps réel
-2. Notifications
-3. Upload images
-4. Géolocalisation Maps
-
-### PHASE 7: Polish & Debug (Heure 36-44)
-1. Responsive testing
-2. Error handling
-3. Loading states
-4. Animations
-
-### PHASE 8: Documentation (Heure 44-48)
-1. README complet
-2. API documentation
-3. Guide installation
-4. Troubleshooting
+- [x] `src/app/layout.tsx` - Root layout avec Header, Footer, Providers ✅
+- [x] `src/components/layout/header.tsx` - Navigation responsive ✅
+- [x] `src/components/layout/footer.tsx` - Pied de page ✅
+- [x] `src/app/providers.tsx` - SessionProvider NextAuth ✅
 
 ---
 
-## 🎯 DÉCISIONS TECHNIQUES PRISES
+## ✅ EPIC 6: HOMEPAGE (100%)
 
-### Stack justifié
-**Next.js 14** - SSR/SSG natif, excellent SEO, API routes intégrées
-**TypeScript** - Typage fort, moins d'erreurs, meilleure DX
-**Prisma** - ORM type-safe, migrations faciles, excellent avec TS
-**Tailwind CSS** - Développement rapide, pas de CSS custom
-**Zustand** - State management simple et performant vs Redux
-
-### Architecture choisie
-- **App Router** Next.js (pas Pages Router) - Plus moderne
-- **Server Components** par défaut - Meilleures performances
-- **Client Components** uniquement pour interactivité
-- **API Routes** collocées avec features
-- **Clean Architecture** - Séparation concerns
+- [x] `src/app/page.tsx` - Page d'accueil complète ✅
+  - Hero section avec gradient bleu + SearchBar
+  - Grille de catégories (CategoryGrid)
+  - Section "Comment ça marche ?" (3 étapes)
+  - Section confiance (Shield, Star, Clock, CheckCircle)
+  - CTA "Devenir prestataire"
+- [x] `src/components/search/search-bar.tsx` - Barre de recherche ✅
+- [x] `src/components/home/category-grid.tsx` - Grille catégories ✅
 
 ---
 
-## 📊 MÉTRIQUES
+## ✅ EPIC 7: SERVICES (100%)
 
-### Temps investi
-- Architecture & Backlog: 1h
-- Setup projet: 0.5h
-- Schéma DB: 0.3h
-- Composants UI: 0.2h
-- **TOTAL**: ~2h / 48h (4% du temps)
+- [x] `src/app/services/page.tsx` - Page liste services avec filtres (search, ville) ✅
+- [x] `src/app/services/[id]/page.tsx` - Page détail service avec reviews, provider, CTA réservation ✅
+- [x] `GET /api/services` - Liste avec filtres (categoryId, search, city, minPrice, maxPrice, pagination) ✅
+- [x] `GET /api/services/[id]` - Détail service ✅
+- [x] `PATCH /api/services/[id]` - Mise à jour (provider propriétaire) ✅
+- [x] `DELETE /api/services/[id]` - Suppression (provider propriétaire) ✅
+- [x] `POST /api/services` - Création service (providers uniquement) ✅
 
-### Code généré
-- ~200 lignes Prisma schema
-- ~300 lignes seed data
-- ~200 lignes composants UI
-- ~100 lignes utils
-- **TOTAL**: ~800 lignes de code
-
-### Fichiers créés
-- 32 fichiers au total
-- 13,418 insertions Git
-- 0 erreurs de compilation
+### ⚠️ Manquant
+- [ ] `/services/new` - Page formulaire de création de service (UI)
 
 ---
 
-## ⚠️ RISQUES & MITIGATION
+## ✅ EPIC 8: RÉSERVATIONS (100%)
 
-### Risque: Temps insuffisant pour toutes les features
-**Mitigation**: Priorisation P0 (Auth, Services, Bookings, Payment) vs P1/P2
-
-### Risque: PostgreSQL pas configuré localement
-**Mitigation**: Instructions claires README, skip si nécessaire en dev
-
-### Risque: APIs externes (Stripe, Maps) nécessitent configuration
-**Mitigation**: Mode développement avec mocks/fallbacks
+- [x] `src/app/bookings/new/page.tsx` - Formulaire nouvelle réservation (date + message) ✅
+- [x] `GET /api/bookings` - Liste réservations (filtre client/provider) ✅
+- [x] `POST /api/bookings` - Créer réservation ✅
+- [x] `GET /api/bookings/[id]` - Détail réservation ✅
+- [x] `PATCH /api/bookings/[id]` - Changer statut (CONFIRMED, COMPLETED, CANCELLED) ✅
+- [x] `DELETE /api/bookings/[id]` - Supprimer réservation ✅
 
 ---
 
-## 🚀 LIVRAISON PRÉVUE
+## ✅ EPIC 9: DASHBOARD (100%)
 
-### MVP Fonctionnel (48h)
-- [x] Setup complet
-- [ ] Auth fonctionne
-- [ ] Recherche services
-- [ ] Création booking
-- [ ] Paiement Stripe (test mode)
-- [ ] Dashboard basique
-- [ ] Messagerie simple
-- [ ] Reviews
-- [ ] Responsive mobile
+- [x] `src/app/dashboard/page.tsx` - Dashboard unifié avec tabs ✅
+  - Tab "Réservations" - Liste avec statuts, accept/refuse (provider), marquer terminé
+  - Tab "Mes services" - CTA créer service (provider uniquement)
+  - Tab "Profil" - Infos utilisateur + rôle
+  - Redirection auto vers /login si non authentifié
+
+---
+
+## ✅ EPIC 10: REVIEWS & CATÉGORIES API (100%)
+
+- [x] `GET /api/reviews` - Liste reviews ✅
+- [x] `POST /api/reviews` - Créer review (après booking COMPLETED) ✅
+- [x] `GET /api/categories` - Liste toutes les catégories ✅
+
+### ⚠️ Manquant
+- [ ] `/reviews/new` - Page formulaire laisser un avis (UI)
+
+---
+
+## ❌ FONCTIONNALITÉS NON IMPLÉMENTÉES (P1/P2)
+
+### Pages manquantes
+- [ ] `/profile/[id]` - Profil public prestataire
+- [ ] `/services/new` - Formulaire création service
+- [ ] `/reviews/new` - Formulaire laisser un avis
+
+### Intégrations non connectées (packages installés, code non écrit)
+- [ ] **Stripe** - Paiements (stripe + @stripe/stripe-js installés)
+  - Stripe Connect pour providers
+  - Checkout flow
+  - Webhooks
+  - Système d'escrow
+- [ ] **Socket.io** - Messagerie temps réel (socket.io installé)
+  - Page `/messages`
+  - Conversations
+  - Notifications en direct
+- [ ] **Google Maps / Géolocalisation**
+  - Recherche par distance
+  - Carte des services
+- [ ] **Upload d'images**
+  - Photos de profil
+  - Photos de services
+- [ ] **Emails transactionnels** (SendGrid)
+  - Confirmation réservation
+  - Rappels
+
+### Composants UI manquants
+- [ ] `Toast` - Notifications utilisateur
+- [ ] `Skeleton` - States de chargement
+- [ ] `DropdownMenu` - Menu utilisateur connecté dans le header
 
 ### Documentation
-- [x] README installation
 - [ ] API endpoints documentés
 - [ ] Guide utilisateur
 - [ ] Troubleshooting
 
 ---
 
-## 📝 NOTES
+## 🎯 DÉCISIONS TECHNIQUES PRISES
 
-### Points forts actuels
-✅ Architecture solide documentée
-✅ Schéma DB complet et optimisé
-✅ Stack technologique moderne et performante
-✅ Seed data réaliste pour tests
+### Stack réelle (versions finales)
+**Next.js 16.1.4** - SSR/SSG natif, App Router, API routes intégrées
+**React 19** - Dernière version stable
+**TypeScript** - Typage fort, moins d'erreurs
+**Prisma 7** - ORM type-safe, migrations faciles
+**Tailwind CSS v4** - Développement rapide
+**NextAuth v5 (beta)** - Authentification moderne
+**Zustand** - State management léger
 
-### À améliorer
-⚠️ Besoin de créer tous les composants UI rapidement
-⚠️ Backend API pas encore implémenté
-⚠️ Aucune page fonctionnelle pour le moment
-
-### Prochaine action immédiate
-🎯 Créer le layout principal + homepage avec search bar (style Yoojo)
+### Architecture implémentée
+- **App Router** Next.js - Moderne et performant
+- **Server Components** par défaut - SEO et performances
+- **Client Components** `'use client'` pour interactivité
+- **API Routes** par feature (`/api/services`, `/api/bookings`, etc.)
 
 ---
 
-**Mis à jour**: {{DATE}}
-**Prochain checkpoint**: Heure 8 (fin auth + pages principales)
+## 📊 MÉTRIQUES ACTUELLES
+
+### Fichiers implémentés
+- 23 fichiers TypeScript/TSX
+- 14 fichiers API routes
+- 10 composants UI Radix UI
+- ~3 500 lignes de code total
+
+### Couverture fonctionnelle
+- **Infrastructure**: 100% ✅
+- **Base de données**: 100% ✅
+- **Authentification**: 100% ✅
+- **Composants UI**: 90% ⚠️
+- **Homepage**: 100% ✅
+- **Services (liste + détail)**: 100% ✅
+- **Réservations**: 100% ✅
+- **Dashboard**: 100% ✅
+- **Reviews (API)**: 100% ✅
+- **Paiements Stripe**: 0% ❌
+- **Messagerie temps réel**: 0% ❌
+- **Géolocalisation**: 0% ❌
+- **Upload images**: 0% ❌
+- **Profil public**: 0% ❌
+
+### Estimation globale d'avancement: **~65% du MVP**
+
+---
+
+## ⚠️ RISQUES ACTUELS
+
+### PostgreSQL non configuré en CI
+**Mitigation**: Instructions README, variables d'environnement .env.example fourni
+
+### NextAuth v5 en beta
+**Mitigation**: Version stable beta.30, API considérée stable pour le MVP
+
+### Stripe et Maps nécessitent des clés API
+**Mitigation**: Mode développement possible sans ces features
+
+---
+
+## 🚀 ÉTAT DU MVP
+
+### Fonctionnel ✅
+- [x] Setup complet (Next.js + Prisma + Tailwind)
+- [x] Authentification (inscription + connexion)
+- [x] Liste et recherche de services
+- [x] Détail d'un service avec avis
+- [x] Création de réservation
+- [x] Dashboard client et prestataire
+- [x] API REST complète (services, bookings, reviews, categories)
+- [x] Protection des routes (middleware)
+
+### Non implémenté ❌
+- [ ] Paiements Stripe
+- [ ] Messagerie temps réel
+- [ ] Profil public prestataire
+- [ ] Page création service (UI)
+- [ ] Page laisser un avis (UI)
+- [ ] Géolocalisation / Maps
+- [ ] Upload d'images
+- [ ] Emails transactionnels
+
+### Documentation
+- [x] README installation complet
+- [x] Comptes de test documentés
+- [ ] API endpoints documentés
+- [ ] Guide utilisateur
+
+---
+
+**Mis à jour**: 24 février 2026
+**Prochaine priorité**: Profil public `/profile/[id]` + page création service `/services/new` + composants Toast/Skeleton
