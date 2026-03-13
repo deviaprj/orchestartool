@@ -1,0 +1,7 @@
+# No external dependencies required for the core functionality
+# The tool uses only Python standard library
+
+# Optional: For future enhancements
+# requests>=2.31.0
+# pyyaml>=6.0
+# click>=8.1.0
